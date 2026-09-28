@@ -1,0 +1,59 @@
+% ---------------------------------------------------------
+% GMAT 2025a CubeSat Orbit Simulation – Wildfire Monitoring
+% ---------------------------------------------------------
+
+Create Spacecraft CubeSat;
+CubeSat.DateFormat = UTCGregorian;
+CubeSat.Epoch = '2025-11-03 00:00:00.000';
+CubeSat.CoordinateSystem = EarthMJ2000Eq;
+CubeSat.DisplayStateType = Keplerian;
+
+% ---- Orbital Elements (Sun-synchronous-like LEO) ----
+CubeSat.SMA = 6878;            % km
+CubeSat.ECC = 0.001;           % small eccentricity
+CubeSat.INC = 97.4;            % deg
+CubeSat.RAAN = 0.0;
+CubeSat.AOP = 0.0;
+CubeSat.TA = 0.0;
+
+% ---- Physical Characteristics ----
+CubeSat.DryMass = 4.0;         % kg
+CubeSat.DragArea = 0.03;       % m^2
+CubeSat.Cd = 2.2;              % dimensionless
+
+% Solar radiation pressure
+CubeSat.SRPArea = 0.02;        % m^2
+CubeSat.Cr = 1.2;
+
+% ---- Force Model ----
+Create ForceModel BasicForces;
+BasicForces.CentralBody = Earth;
+BasicForces.PrimaryBodies = {Earth, Sun, Moon};
+BasicForces.PointMasses = {Earth, Sun, Moon};
+BasicForces.Drag = On;
+BasicForces.SRP = On;
+BasicForces.GravityField.Earth.Degree = 4;
+BasicForces.GravityField.Earth.Order = 4;
+BasicForces.AtmosphereModel = JacchiaRoberts;   % or MSISE90, NRLMSISE00 if available
+
+% ---- Propagator ----
+Create Propagator PropLEO;
+PropLEO.Type = RungeKutta89;
+PropLEO.InitialStepSize = 60;
+PropLEO.Accuracy = 1e-10;
+PropLEO.MinStep = 0.1;
+PropLEO.MaxStep = 300;
+PropLEO.FM = BasicForces;
+
+% ---- Report File ----
+Create ReportFile OrbitReport;
+OrbitReport.Filename = 'OrbitResults.csv';
+OrbitReport.Precision = 10;
+OrbitReport.Add = {CubeSat.Epoch, CubeSat.SMA, CubeSat.Altitude, CubeSat.INC};
+OrbitReport.WriteHeaders = true;
+
+% ---- Mission Sequence ----
+BeginMissionSequence;
+Propagate PropLEO(CubeSat) {CubeSat.ElapsedDays = 1.0};
+Report OrbitReport CubeSat.Epoch CubeSat.SMA CubeSat.Altitude CubeSat.INC;
+EndMissionSequence;
