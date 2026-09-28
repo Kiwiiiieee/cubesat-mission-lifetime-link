@@ -71,10 +71,7 @@ The header image is Figure 1 of the report: the GMAT 3D orbit view at the re-ent
 | `code/matlab/matlab/compute_GSD.m`, `compute_SNR.m`, `compute_lifetime.m`, `compute_revisit.m` | Helper models used by the constraints and results | MATLAB |
 | `figures/` | Report figures | Image viewer |
 
-**About the energy-minimisation code.** `objective_Eday.m` was extracted from appendix 8.3 of the report, because it was not among the original code files. Only PDF copy artefacts were fixed: the five `h = x(1); % altitude (km)`-style lines had been split into separate pieces by the PDF column layout and were rejoined, and a page number ("17") inside the listing was removed. The original `energy.m`, like the printed appendix, has no line that runs the optimiser. To reproduce Figure 9, add this line before the results printout:
-```matlab
-[xopt, fval] = fmincon(obj, x0, [], [], [], [], lb, ub, nonlcon, options);
-```
+**About the energy-minimisation code.** `objective_Eday.m` was extracted from appendix 8.3 of the report, because it was not among the original code files. Only PDF copy artefacts were fixed: the five `h = x(1); % altitude (km)`-style lines had been split into separate pieces by the PDF column layout and were rejoined, and a page number ("17") inside the listing was removed. The line that runs the optimiser, `[xopt, fval] = fmincon(obj, x0, [], [], [], [], lb, ub, nonlcon, options);`, was not in the printed appendix. It has been added to `energy.m`, so the script now runs as-is.
 
 **Not included:** `OrbitResults.xlsx`, the full GMAT ephemeris (about 75 MB), is too large for this repository, and the MATLAB `.fig` versions of the plots are not included either.
 
@@ -83,7 +80,7 @@ The header image is Figure 1 of the report: the GMAT 3D orbit view at the re-ent
 2. Save the report as `OrbitResults.xlsx` (the MATLAB scripts read that file name) next to the MATLAB scripts.
 3. Run `LifetimeGMAT.m` for the lifetime and `Plots.m` for the figures.
 4. Run `code/Antenna Optimization/code.m` (S-band) and `code/matlab/matlab/code.m` (X-band) to reproduce Figures 7 and 8.
-5. For Figure 9, add the `fmincon` line shown above to `energy.m` and run it from `code/matlab/matlab/`.
+5. For Figure 9, run `energy.m` from `code/matlab/matlab/`.
 
 ---
 Kaoutar Ammara · Aerospace Engineer · [GitHub](https://github.com/Kiwiiiieee) · [LinkedIn](https://linkedin.com/in/kaoutar-ammara)

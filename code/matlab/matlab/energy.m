@@ -31,6 +31,7 @@ nonlcon = @(x) constraints_energy(x, GSD_req, SNR_req, Cd, A, tau_req, Dmax, m_m
 
 
 options = optimoptions('fmincon','Display','iter','Algorithm','sqp');
+[xopt, fval] = fmincon(obj, x0, [], [], [], [], lb, ub, nonlcon, options);
 
 fprintf('\n========= OPTIMIZATION RESULTS =========\n');
 fprintf('Optimal Altitude (h)           : %.2f km\n', xopt(1)/1e3);
