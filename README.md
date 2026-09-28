@@ -57,7 +57,7 @@ The header image is Figure 1 of the report: the GMAT 3D orbit view at the re-ent
 
 ## Repository contents
 | Path | Content | Opens with |
-|---|---|---|
+|:--|:--|:--|
 | `report/Homewok_9.pdf` | Full report (19 pages) | Any PDF reader |
 | `tools/gmat/OrbitMission.script` | GMAT mission used for the lifetime run (propagates until 120 km altitude or 1825 days and writes `OrbitResults.csv`) | [GMAT](https://sourceforge.net/projects/gmat/) (NASA General Mission Analysis Tool) |
 | `tools/gmat/Orbit.script` | Simpler GMAT set-up script for the same CubeSat | GMAT |
@@ -82,5 +82,4 @@ The header image is Figure 1 of the report: the GMAT 3D orbit view at the re-ent
 4. Run `code/Antenna Optimization/code.m` (S-band) and `code/matlab/matlab/code.m` (X-band) to reproduce Figures 7 and 8.
 5. For Figure 9, run `energy.m` from `code/matlab/matlab/`.
 
----
 Kaoutar Ammara · Aerospace Engineer · [GitHub](https://github.com/Kiwiiiieee) · [LinkedIn](https://linkedin.com/in/kaoutar-ammara)
